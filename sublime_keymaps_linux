@@ -4,4 +4,7 @@
 	{ "keys": ["shift+down"], "command": "swap_line_down" },
 	{ "keys": ["ctrl+l"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Delete Line.sublime-macro"} },
 	{ "keys": ["ctrl+shift+down"], "command": "expand_selection", "args": {"to": "line"} },
+	{ "keys": ["shift+alt+up"], "command": "select_lines", "args": {"forward": false} },
+	{ "keys": ["shift+alt+down"], "command": "select_lines", "args": {"forward": true} },
+
 ]
