@@ -1,8 +1,11 @@
 ### .vimrc
-place in home folder
+~
 
 ### sublime directory
-/home/mili/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
 
 ### zim drirectory
-.config/zim/style.conf
+~/.config/zim/style.conf
+
+### jupyter notebook directory
+~/.jupyter/custom/custom.css
