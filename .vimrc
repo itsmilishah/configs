@@ -35,6 +35,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'kristijanhusak/vim-hybrid-material'
 Plugin 'valloric/youcompleteme'
+Plugin 'suan/vim-instant-markdown'
 call vundle#end()                           " required
 filetype plugin indent on                   " required
 "}}}
@@ -44,7 +45,6 @@ filetype plugin indent on                   " required
 " interface
 " {{{
 
-set columns=100                               " set linewrap column
 set nowrap
 set colorcolumn=73,80
 
@@ -108,7 +108,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 0
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '>'
+let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:ctrlp_working_path_mode = 'c'						" ctrlp settings
 let g:airline#extensions#wordcount#enabled = 1
 " ultisnip
@@ -128,61 +128,86 @@ filetype plugin on
 
 " custom shortcuts
 " {{{
+
 " set <Space> as leader key
 let mapleader = "\<Space>"
 nmap <silent> <leader>/ :nohlsearch<CR>
+
 " map paste from system clipboard to <leader>p
 nnoremap <Leader>p "+p <CR>
-" set C-d as duplicate line
+
+" set Redo to r
+nnoremap r <C-r>
+
+"navigate windows using <leader> wsad
+nnoremap <S-w> <C-W>k <CR>
+nnoremap <S-s> <C-W>j <CR>
+nnoremap <S-a> <C-W>h <CR>
+nnoremap <S-d> <C-W>l <CR>
+
+" set Leader-d as duplicate line
 nnoremap <C-d> :t.<CR>
-" set <S-down> as move line down
-vnoremap <S-Down> :'<,'>m +2<CR>
-" set <S-up> as move line up
+vnoremap <C-d> :'<,'>t.<CR>
+
+" set <S-down>, <S-up> as move line down/up
+nnoremap <S-Down> :m +1<CR>
 nnoremap <S-Up> :m .-2<CR>
+
 " join line
 nnoremap j J
+
+" replace tabs with spaces
 nnoremap <Leader>t :%s/\t/    /g<CR>
+
 " set leader-s as save file
-nnoremap <Leader>s :w<CR>
+nnoremap <Leader>s :update<CR>
+inoremap <C-q> <Esc>:update<CR>gi
+
 " navigate buffers using <leader>left, right
 nnoremap <C-Left> :bp <CR>
 nnoremap <C-Right> :bn <CR>
-"navigate windows using <alt>left, right
-"nnoremap <S-w> <C-W>k <CR>
-"nnoremap <S-s> <C-W>j <CR>
-"nnoremap <S-a> <C-W>h <CR>
-"nnoremap <S-d> <C-W>l <CR>
-"nnoremap <M-s> <CR>
+
 " map nerd tree toggle to <Leader>-m
 nnoremap <Leader>m :NERDTreeToggle <CR>
+
 " map refresh .vimrc to <F5>
 nnoremap <F5> :so $MYVIMRC <CR>
+
 " map comment, uncomment
-map <Leader>q <Plug>NERDCommenterToggle('n', 'Toggle') <CR>
+map <C-_> :call NERDComment(0, "toggle")<CR>
+"map <C-//> <Plug>NERDCommenterToggle('n', 'Toggle')
+
 " map <F11> to full screen
 map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen") <CR>
+
 " map cp to copy file path to system clipboard
 nnoremap cp :let @+=expand('%:p:h') <CR>
+
 " win key mapped to esc using keysym Super_L = Escape in ~/.Xmodmap
 for i in range(1,9) 			" map <leader>i to buffer i
 	execute 'nmap <Leader>'.i.' <Plug>AirlineSelectTab'.i.'<CR>'
 endfor
-" map ctrl-a : increment number : +
+
+" map increment, decrement numbers
 nnoremap + <C-a>
-" map ctrl-x : decrement number : -
 nnoremap - <C-x>
+
 " map ctrl-a to select all in normal mode
 nnoremap <C-a> :%y+ <CR>
+
 " map vertical and horizontal split to <leader> h,v
 nnoremap <Leader>v :vs <CR>
 nnoremap <Leader>h :sv <CR>
 nnoremap <C-x> :bw <CR>
+
 " shortcuts to open vimrc, ref, notes files
 nnoremap <Leader>c :e ~/.vimrc <CR>
 nnoremap <Leader>r :e /home/mili/Dropbox/zim/ref.txt <CR>
 nnoremap <Leader>n :e /home/mili/Dropbox/Comp/comp_notes.txt<CR>:set foldmethod=marker<CR>:set foldenable<CR>
+
 " shortcut for most recently used files
 "nnoremap <m-r> :MRU <CR>
+
 " Allow the usage of Alt key in terminal
 let c='a'
 while c <= 'z'
@@ -205,6 +230,9 @@ command! -nargs=1 Restore execute "source ~/.vim/sessions/"+<q-args>
 " Abbreviations
 " {{{
 :ab py_nlp import re<CR>import spacy<CR>nlp = spacy.load('en')
+:ab py_pass raise NotImplementedError()
+:ab py_getset def get_bhro(self):<CR>return self._bhro<CR><CR>def set_bhro(self, bhro: Any):<CR>self._bhro = bhro
+:ab py_mili print('------mili------')<CR>print('------ENDmili--------')
 " }}}
 
 
